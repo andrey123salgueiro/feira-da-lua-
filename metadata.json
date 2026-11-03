@@ -1,0 +1,6 @@
+{
+  "name": "Feira da Lua Arapongas - Gestão de Aluguel de Barracas",
+  "description": "Sistema completo para controle de aluguel e espaço das barracas da Feira da Lua de Arapongas. Gestão de presenças, taxas em Pix e dinheiro, despesas, mapa dos boxes e prestação de contas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
