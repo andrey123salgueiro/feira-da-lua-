@@ -57,10 +57,10 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-slate-900 border border-amber-500/30 rounded-2xl shadow-2xl p-6 sm:p-8 my-8 text-slate-100">
+      <div className="relative w-full max-w-2xl bg-slate-900 border border-emerald-500/30 rounded-2xl shadow-2xl p-6 sm:p-8 my-8 text-slate-100">
         {/* Actions bar (hidden in print) */}
         <div className="flex items-center justify-between pb-4 border-b border-slate-800 no-print">
-          <div className="flex items-center gap-2 text-amber-400 font-semibold text-sm">
+          <div className="flex items-center gap-2 text-emerald-400 font-semibold text-sm">
             <CheckCircle2 className="w-5 h-5 text-emerald-400" />
             <span>Recibo Oficial de Quitação</span>
           </div>
@@ -94,7 +94,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
         <div className="mt-6 p-6 sm:p-8 rounded-xl bg-slate-950/70 border border-slate-800 space-y-6 print:bg-white print:text-black print:border-black print:p-4">
           {/* Header */}
           <div className="text-center border-b border-slate-800 pb-4 print:border-black">
-            <p className="text-xs uppercase tracking-widest text-amber-400 font-semibold print:text-black">
+            <p className="text-xs uppercase tracking-widest text-emerald-400 font-semibold print:text-black">
               {config.instituicaoNome}
             </p>
             <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white mt-1 print:text-black">
@@ -103,7 +103,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
             <p className="text-xs text-slate-400 mt-1 print:text-gray-700">
               {config.localFeira} · {config.cidade}
             </p>
-            <div className="inline-block mt-2 px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-md text-xs font-mono text-amber-300 print:text-black print:border-black">
+            <div className="inline-block mt-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-md text-xs font-mono text-emerald-300 print:text-black print:border-black">
               Nº {numeroRecibo}
             </div>
           </div>

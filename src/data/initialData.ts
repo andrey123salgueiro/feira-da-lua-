@@ -8,6 +8,8 @@ export const CONFIG_INICIAL: ConfiguracaoFeira = {
   titularPix: 'Coordenação Geral da Feira da Lua de Arapongas',
   bancoPix: 'Sicredi Arapongas',
   taxaPadraoGlobal: 55.0,
+  temaCor: 'esmeralda',
+  modoEscuro: true,
   mensagemWhatsAppModelo:
     'Olá, equipe da *Barraca {barraca}*! 🌙\n\nLembramos da taxa de ocupação da *Feira da Lua de Arapongas* do dia *{data}*, no valor de *{valor}*.\n\n🔑 *Chave Pix:* {chave_pix}\n👤 *Favorecido:* {titular_pix}\n\nAssim que efetuar, por favor nos envie o comprovante para dar baixa no sistema. Agradecemos e ótimas vendas!',
 };

@@ -9,8 +9,6 @@ import {
   FileText,
   User,
   Phone,
-  Tag,
-  Filter,
 } from 'lucide-react';
 import { ConfiguracaoFeira, Feira, Feirante, FormaPagamento } from '../types';
 import { formatarMoeda, formatarTelefone, gerarLinkWhatsApp } from '../utils/formatters';
@@ -32,7 +30,6 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
   onAtualizarPagamento,
   onAtualizarPresenca,
   onEmitirRecibo,
-  modoAdmin,
 }) => {
   const [feiranteSelecionadoId, setFeiranteSelecionadoId] = useState<string | null>(null);
   const [filtroStatus, setFiltroStatus] = useState<'todos' | 'pagos' | 'pendentes' | 'ausentes'>('todos');
@@ -47,35 +44,40 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
       }
     : null;
 
-  // Setores do mapa
+  // Setores do mapa com cores distintas e sofisticadas
   const setores: {
     titulo: string;
     localizacao: Feirante['localizacao'];
     corBorda: string;
+    corTag: string;
     descricao: string;
   }[] = [
     {
       titulo: 'Ala Gourmet Principal (Chapas, Massas & Carnes)',
       localizacao: 'Ala Gourmet',
-      corBorda: 'border-amber-500/30',
+      corBorda: 'border-emerald-500/30',
+      corTag: 'bg-emerald-400',
       descricao: 'Bisteca, Macarrão, Grego, Perohê, Pernil, Espetinhos, Alpha Burguer, Torresmo e Culinária Típica',
     },
     {
       titulo: 'Ala Central de Lanches & Porções Rápidas',
       localizacao: 'Ala Central',
-      corBorda: 'border-sky-500/30',
+      corBorda: 'border-teal-500/30',
+      corTag: 'bg-teal-400',
       descricao: 'Batata Frita, Pastéis, Batata Recheada, Hot Dog, Pizza Cone e Peixe Frito',
     },
     {
       titulo: 'Ala de Doces, Sucos & Bebidas Artesanais',
       localizacao: 'Ala Bebidas & Doces',
-      corBorda: 'border-emerald-500/30',
+      corBorda: 'border-cyan-500/30',
+      corTag: 'bg-cyan-400',
       descricao: 'Sucos Naturais, Caldo de Cana, Churros Gourmet, Crepes e Doces',
     },
     {
       titulo: 'Área Kids, Brinquedos & Lazer Familiar',
       localizacao: 'Área Kids & Artesanato',
-      corBorda: 'border-purple-500/30',
+      corBorda: 'border-indigo-500/30',
+      corTag: 'bg-indigo-400',
       descricao: 'Val Brinquedos, Pula-Pula e Atrações Infantis',
     },
   ];
@@ -86,11 +88,11 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-900/90 border border-slate-800">
         <div>
           <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-amber-400" />
-            Mapa Interativo dos Boxes · Estação das Feiras (Arapongas)
+            <MapPin className="w-4 h-4 text-emerald-400" />
+            Mapa dos Boxes · Estação das Feiras (Arapongas)
           </h2>
           <p className="text-xs text-slate-400 mt-0.5">
-            Clique em qualquer barraca para gerenciar presença, pagamento de aluguel ou emitir recibo instantâneo.
+            Clique na barraca para alternar presença, forma de pagamento ou gerar o recibo.
           </p>
         </div>
 
@@ -115,7 +117,7 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
           <button
             onClick={() => setFiltroStatus('pendentes')}
             className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-              filtroStatus === 'pendentes' ? 'bg-amber-950 text-amber-300 border border-amber-800/60' : 'text-slate-400 hover:text-slate-200'
+              filtroStatus === 'pendentes' ? 'bg-rose-950 text-rose-300 border border-rose-800/60' : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             Pendentes
@@ -131,7 +133,7 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
         </div>
       </div>
 
-      {/* Main Grid: Visual sectors representing the square */}
+      {/* Main Grid: Visual sectors */}
       <div className="space-y-6">
         {setores.map((setor) => {
           const barracasSetor = feirantes.filter((f) => f.localizacao === setor.localizacao);
@@ -141,7 +143,7 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
             <div key={setor.localizacao} className={`p-4 sm:p-5 rounded-2xl bg-slate-950/70 border ${setor.corBorda}`}>
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-4 pb-2 border-b border-slate-800/80">
                 <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                  <span className={`w-2 h-2 rounded-full ${setor.corTag}`}></span>
                   {setor.titulo}
                 </h3>
                 <span className="text-[11px] text-slate-400">{setor.descricao}</span>
@@ -156,7 +158,6 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
                     valorTaxa: feira.taxaPadrao,
                   };
 
-                  // Filter condition
                   const estaPago = reg.presente && (reg.pagamento === 'pix' || reg.pagamento === 'dinheiro' || reg.pagamento === 'pago_outro_dia');
                   const estaPendente = reg.presente && reg.pagamento === 'pendente';
                   const estaAusente = !reg.presente;
@@ -187,9 +188,9 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
                     statusTexto = 'Pós-Feira';
                     statusIcon = <CheckCircle className="w-3.5 h-3.5 text-purple-400" />;
                   } else if (reg.pagamento === 'pendente') {
-                    badgeBg = 'bg-amber-950/80 border-amber-500/60 text-amber-300 animate-pulse';
-                    statusTexto = 'Aluguel Pendente';
-                    statusIcon = <AlertCircle className="w-3.5 h-3.5 text-amber-400" />;
+                    badgeBg = 'bg-rose-950/70 border-rose-500/50 text-rose-300';
+                    statusTexto = 'Pendente';
+                    statusIcon = <AlertCircle className="w-3.5 h-3.5 text-rose-400" />;
                   } else if (reg.pagamento === 'isento') {
                     badgeBg = 'bg-slate-800 border-slate-600 text-slate-300';
                     statusTexto = 'Isento';
@@ -201,13 +202,13 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
                       onClick={() => setFeiranteSelecionadoId(barraca.id)}
                       className={`cursor-pointer p-3.5 rounded-xl border transition-all text-left flex flex-col justify-between min-h-[105px] ${
                         isSelecionado
-                          ? 'ring-2 ring-amber-400 bg-slate-900 border-amber-400/80 shadow-lg shadow-amber-400/10'
+                          ? 'ring-2 ring-emerald-400 bg-slate-900 border-emerald-400/80 shadow-lg shadow-emerald-400/10'
                           : 'bg-slate-900/80 hover:bg-slate-850 border-slate-800 hover:border-slate-700'
                       }`}
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div>
-                          <span className="text-[10px] font-mono text-amber-400/90 font-semibold uppercase">
+                          <span className="text-[10px] font-mono text-teal-400 font-semibold uppercase">
                             {barraca.boxNumero}
                           </span>
                           <h4 className="text-sm font-bold text-white tracking-tight">
@@ -243,12 +244,12 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
 
       {/* Selected stall inspector drawer / modal */}
       {feiranteSelecionado && registroSelecionado && (
-        <div className="fixed inset-x-0 bottom-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-amber-500/30 p-4 sm:p-6 shadow-2xl animate-in slide-in-from-bottom duration-200">
+        <div className="fixed inset-x-0 bottom-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-emerald-500/40 p-4 sm:p-6 shadow-2xl">
           <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
             {/* Stall metadata */}
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 text-xs font-mono font-bold bg-amber-400/10 text-amber-300 border border-amber-400/30 rounded">
+                <span className="px-2 py-0.5 text-xs font-mono font-bold bg-teal-400/10 text-teal-300 border border-teal-400/30 rounded">
                   {feiranteSelecionado.boxNumero}
                 </span>
                 <h3 className="text-lg font-bold text-white">
@@ -267,7 +268,7 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
                     {formatarTelefone(feiranteSelecionado.telefone)}
                   </span>
                 )}
-                <span className="font-mono text-amber-400 font-semibold">
+                <span className="font-mono text-emerald-400 font-semibold">
                   Taxa: {formatarMoeda(registroSelecionado.valorTaxa || feira.taxaPadrao)}
                 </span>
               </div>
@@ -282,7 +283,7 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
                 }
                 className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
                   registroSelecionado.presente
-                    ? 'bg-amber-400/10 border-amber-400/40 text-amber-300'
+                    ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300'
                     : 'bg-slate-800 border-slate-700 text-slate-400'
                 }`}
               >
@@ -316,7 +317,7 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
                     onClick={() => onAtualizarPagamento(feiranteSelecionado.id, 'pendente')}
                     className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
                       registroSelecionado.pagamento === 'pendente'
-                        ? 'bg-amber-600 text-white font-semibold'
+                        ? 'bg-rose-600 text-white font-semibold'
                         : 'text-slate-400 hover:text-white'
                     }`}
                   >
@@ -362,7 +363,7 @@ export const FairMapTab: React.FC<FairMapTabProps> = ({
                 onClick={() => onEmitirRecibo(feiranteSelecionado)}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg transition-colors"
               >
-                <FileText className="w-3.5 h-3.5 text-amber-400" />
+                <FileText className="w-3.5 h-3.5 text-teal-400" />
                 Recibo
               </button>
 

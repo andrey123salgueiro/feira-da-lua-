@@ -8,7 +8,6 @@ interface MetricsOverviewProps {
 }
 
 export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ feira }) => {
-  // Cálculo de receitas por taxas
   let totalTaxasDinheiro = 0;
   let totalTaxasPix = 0;
   let totalPendentes = 0;
@@ -69,10 +68,10 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ feira }) => {
       {/* 5-Column Primary Metrics Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
         {/* Card 1: Total Bruto */}
-        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800/90">
           <div className="flex items-center justify-between text-slate-400">
             <span className="text-[11px] font-medium uppercase tracking-wider">Arrecadação Bruta</span>
-            <DollarSign className="w-4 h-4 text-amber-400" />
+            <DollarSign className="w-4 h-4 text-teal-400" />
           </div>
           <div className="mt-2 flex items-baseline justify-between">
             <span className="text-xl sm:text-2xl font-bold font-mono tabular-nums text-white">
@@ -85,7 +84,7 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ feira }) => {
         </div>
 
         {/* Card 2: Dinheiro em Espécie */}
-        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800/90">
           <div className="flex items-center justify-between text-emerald-400">
             <span className="text-[11px] font-medium uppercase tracking-wider">Caixa em Dinheiro</span>
             <Wallet className="w-4 h-4 text-emerald-400" />
@@ -101,7 +100,7 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ feira }) => {
         </div>
 
         {/* Card 3: Pix Bancário */}
-        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800/90">
           <div className="flex items-center justify-between text-sky-400">
             <span className="text-[11px] font-medium uppercase tracking-wider">Caixa em PIX</span>
             <QrCode className="w-4 h-4 text-sky-400" />
@@ -117,7 +116,7 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ feira }) => {
         </div>
 
         {/* Card 4: Despesas */}
-        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
+        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800/90">
           <div className="flex items-center justify-between text-rose-400">
             <span className="text-[11px] font-medium uppercase tracking-wider">Despesas Totais</span>
             <Receipt className="w-4 h-4 text-rose-400" />
@@ -133,15 +132,15 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ feira }) => {
         </div>
 
         {/* Card 5: Saldo Líquido do Evento */}
-        <div className="col-span-2 lg:col-span-1 p-4 rounded-xl bg-gradient-to-br from-slate-900 to-amber-950/30 border border-amber-500/30">
-          <div className="flex items-center justify-between text-amber-300">
+        <div className="col-span-2 lg:col-span-1 p-4 rounded-xl bg-gradient-to-br from-slate-900 via-slate-900 to-teal-950/40 border border-teal-500/40">
+          <div className="flex items-center justify-between text-teal-300">
             <span className="text-[11px] font-medium uppercase tracking-wider">Saldo Líquido</span>
-            <TrendingUp className="w-4 h-4 text-amber-400" />
+            <TrendingUp className="w-4 h-4 text-teal-400" />
           </div>
           <div className="mt-2">
             <span
               className={`text-xl sm:text-2xl font-bold font-mono tabular-nums ${
-                saldoLiquidoGeral >= 0 ? 'text-amber-400' : 'text-rose-400'
+                saldoLiquidoGeral >= 0 ? 'text-teal-300' : 'text-rose-400'
               }`}
             >
               {formatarMoeda(saldoLiquidoGeral)}
@@ -153,16 +152,16 @@ export const MetricsOverview: React.FC<MetricsOverviewProps> = ({ feira }) => {
         </div>
       </div>
 
-      {/* Inadimplência Notice Banner (if any pending) */}
+      {/* Inadimplência Notice Banner */}
       {contagemPendentes > 0 && (
-        <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-amber-950/40 border border-amber-500/40 text-amber-200 text-xs sm:text-sm">
+        <div className="flex items-center justify-between px-4 py-3 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-200 text-xs sm:text-sm">
           <div className="flex items-center gap-2.5">
-            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+            <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
             <span>
               <strong>Atenção:</strong> Há <strong>{contagemPendentes} barraca(s)</strong> presente(s) com pagamento pendente, totalizando <strong className="font-mono">{formatarMoeda(totalPendentes)}</strong> em aberto.
             </span>
           </div>
-          <span className="text-xs text-amber-400 font-medium">Use a cobrança rápida via WhatsApp abaixo</span>
+          <span className="text-xs text-rose-300 font-medium">Use a cobrança rápida via WhatsApp</span>
         </div>
       )}
     </div>

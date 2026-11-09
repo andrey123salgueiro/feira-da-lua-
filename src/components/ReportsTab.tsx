@@ -7,10 +7,8 @@ import {
   Calendar,
   FileSpreadsheet,
   TrendingUp,
-  Receipt,
   Wallet,
   QrCode,
-  ShieldAlert,
 } from 'lucide-react';
 import { ConfiguracaoFeira, Feira, Feirante } from '../types';
 import {
@@ -61,7 +59,6 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
     let feiraDinheiro = 0;
     let feiraPix = 0;
 
-    // Registros
     Object.values(f.registros || {}).forEach((reg) => {
       const feiranteObj = feirantes.find((item) => item.id === reg.feiranteId);
       const val = reg.valorTaxa || f.taxaPadrao;
@@ -85,19 +82,16 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
       }
     });
 
-    // Extras
     (f.receitasExtras || []).forEach((r) => {
       if (r.pagamento === 'dinheiro') feiraDinheiro += r.valor;
       else feiraPix += r.valor;
     });
 
-    // Pós-feira
     (f.pagamentosPosFeira || []).forEach((p) => {
       if (p.pagamento === 'dinheiro') feiraDinheiro += p.valor;
       else feiraPix += p.valor;
     });
 
-    // Despesas
     let despDinheiro = 0;
     let despPix = 0;
     (f.despesas || []).forEach((d) => {
@@ -147,7 +141,7 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-slate-900/90 border border-slate-800 no-print">
         <div>
           <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <FileSpreadsheet className="w-5 h-5 text-amber-400" />
+            <FileSpreadsheet className="w-5 h-5 text-teal-400" />
             Relatórios e Prestação de Contas Consolidada
           </h2>
           <p className="text-xs text-slate-400 mt-1">
@@ -158,7 +152,7 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => window.print()}
-            className="inline-flex items-center gap-1.5 px-3 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-semibold rounded-xl transition-colors shadow-sm shadow-amber-400/20"
+            className="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition-colors shadow-sm shadow-emerald-500/20"
           >
             <Printer className="w-3.5 h-3.5" />
             Imprimir Balancete Oficial
@@ -167,13 +161,13 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
             onClick={exportarCSV}
             className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-xl border border-slate-700 transition-colors"
           >
-            <Download className="w-3.5 h-3.5 text-amber-400" />
+            <Download className="w-3.5 h-3.5 text-teal-400" />
             Exportar CSV
           </button>
         </div>
       </div>
 
-      {/* Printable Official Header (Only in print) */}
+      {/* Printable Official Header */}
       <div className="print-only text-center border-b pb-4 mb-6">
         <h1 className="text-xl font-bold uppercase">{config.instituicaoNome}</h1>
         <p className="text-sm font-semibold mt-1">DEMONSTRATIVO FINANCEIRO E PRESTAÇÃO DE CONTAS</p>
@@ -187,7 +181,7 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
         <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800">
           <div className="flex items-center justify-between text-slate-400">
             <span className="text-[11px] uppercase font-medium">Edições de Feira</span>
-            <Calendar className="w-4 h-4 text-amber-400" />
+            <Calendar className="w-4 h-4 text-teal-400" />
           </div>
           <p className="text-2xl font-bold font-mono text-white mt-1 tabular-nums">
             {feirasFiltradas.length}
@@ -217,12 +211,12 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
           <span className="text-[11px] text-slate-400">Em conta bancária</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-slate-900/90 border border-amber-500/40 bg-gradient-to-br from-slate-900 to-amber-950/20">
-          <div className="flex items-center justify-between text-amber-300">
+        <div className="p-4 rounded-xl bg-slate-900/90 border border-teal-500/40 bg-gradient-to-br from-slate-900 to-teal-950/30">
+          <div className="flex items-center justify-between text-teal-300">
             <span className="text-[11px] uppercase font-medium">Resultado Geral Líquido</span>
-            <TrendingUp className="w-4 h-4 text-amber-400" />
+            <TrendingUp className="w-4 h-4 text-teal-400" />
           </div>
-          <p className="text-2xl font-bold font-mono text-amber-400 mt-1 tabular-nums">
+          <p className="text-2xl font-bold font-mono text-teal-300 mt-1 tabular-nums">
             {formatarMoeda(saldoLiquidoConsolidado)}
           </p>
           <span className="text-[11px] text-slate-400">Receitas - Despesas</span>
@@ -233,7 +227,7 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
       <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
         <div className="flex items-center justify-between pb-2 border-b border-slate-800">
           <h3 className="text-sm font-bold text-white flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-amber-400" />
+            <AlertTriangle className="w-4 h-4 text-rose-400" />
             Pendências e Inadimplências em Aberto
           </h3>
           <span className="text-xs font-mono font-bold text-rose-400">
@@ -365,7 +359,7 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
               >
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                    <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
                     <h4 className="font-bold text-white text-sm">
                       Feira do dia {formatarDataBR(feira.data)} · {feira.titulo}
                     </h4>
@@ -380,7 +374,6 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
                     <span>Despesas: <strong className="font-mono text-rose-400">{formatarMoeda(totalDesp)}</strong></span>
                   </div>
 
-                  {/* Summary of despesas list */}
                   {(feira.despesas || []).length > 0 && (
                     <div className="text-[11px] text-slate-400">
                       <strong>Despesas pagas:</strong>{' '}
@@ -391,7 +384,7 @@ export const ReportsTab: React.FC<ReportsTabProps> = ({
 
                 <div className="text-left md:text-right shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-800">
                   <span className="text-[10px] uppercase text-slate-400 block font-medium">Saldo Líquido</span>
-                  <span className={`text-lg font-bold font-mono tabular-nums ${liquido >= 0 ? 'text-amber-400' : 'text-rose-400'}`}>
+                  <span className={`text-lg font-bold font-mono tabular-nums ${liquido >= 0 ? 'text-teal-300' : 'text-rose-400'}`}>
                     {formatarMoeda(liquido)}
                   </span>
                 </div>

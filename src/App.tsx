@@ -20,12 +20,11 @@ import { ReceiptModal } from './components/ReceiptModal';
 import { NewFairModal } from './components/NewFairModal';
 import { EditStallModal } from './components/EditStallModal';
 
-const STORAGE_KEY_FEIRAS = 'feira_lua_feiras_v2';
-const STORAGE_KEY_FEIRANTES = 'feira_lua_feirantes_v2';
-const STORAGE_KEY_CONFIG = 'feira_lua_config_v2';
+const STORAGE_KEY_FEIRAS = 'feira_lua_feiras_v3';
+const STORAGE_KEY_FEIRANTES = 'feira_lua_feirantes_v3';
+const STORAGE_KEY_CONFIG = 'feira_lua_config_v3';
 
 export default function App() {
-  // Load from localStorage or defaults
   const [feirantes, setFeirantes] = useState<Feirante[]>(() => {
     const salvo = localStorage.getItem(STORAGE_KEY_FEIRANTES);
     if (salvo) {
@@ -101,16 +100,30 @@ export default function App() {
   // Current active fair
   const feiraAtiva = feiras.find((f) => f.id === feiraAtivaId) || feiras[0];
 
+  // Theme background styling
+  const tema = config.temaCor || 'esmeralda';
+
+  const getBackgroundGradient = () => {
+    if (tema === 'safira') {
+      return 'radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.09) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.07) 0%, transparent 40%), linear-gradient(180deg, #070d18 0%, #0b1424 50%, #070d18 100%)';
+    }
+    if (tema === 'cobre') {
+      return 'radial-gradient(circle at 15% 15%, rgba(249, 115, 22, 0.08) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(244, 63, 94, 0.06) 0%, transparent 40%), linear-gradient(180deg, #140d0a 0%, #1c130f 50%, #140d0a 100%)';
+    }
+    // Default: Esmeralda & Menta
+    return 'radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.09) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.07) 0%, transparent 40%), linear-gradient(180deg, #060e15 0%, #0a1722 50%, #060e15 100%)';
+  };
+
   // Handlers for payments and fair records
   const handleAtualizarPagamento = (feiranteId: string, novoPagamento: FormaPagamento) => {
     if (!feiraAtiva) return;
 
     if (novoPagamento === 'pix' || novoPagamento === 'dinheiro') {
       confetti({
-        particleCount: 25,
+        particleCount: 28,
         spread: 60,
         origin: { y: 0.8 },
-        colors: novoPagamento === 'pix' ? ['#38bdf8', '#0284c7'] : ['#34d399', '#059669'],
+        colors: novoPagamento === 'pix' ? ['#0284c7', '#38bdf8', '#7dd3fc'] : ['#059669', '#10b981', '#34d399'],
       });
     }
 
@@ -363,7 +376,6 @@ export default function App() {
     }
   };
 
-  // Stall management handlers
   const handleSalvarFeirante = (feiranteData: Omit<Feirante, 'id'>, id?: string) => {
     if (id) {
       setFeirantes((prev) =>
@@ -375,7 +387,6 @@ export default function App() {
       const novo: Feirante = { ...feiranteData, id: novoId };
       setFeirantes((prev) => [...prev, novo]);
 
-      // Add to current fair if active
       if (feiraAtiva) {
         setFeiras((prev) =>
           prev.map((f) => {
@@ -450,13 +461,12 @@ export default function App() {
       : null;
 
   return (
-    <div className="min-h-screen bg-[#07090e] text-slate-100 flex flex-col justify-between selection:bg-amber-400 selection:text-slate-950 font-sans">
-      {/* Subtle night-sky decorative backdrop */}
+    <div className="min-h-screen bg-[#070e17] text-slate-100 flex flex-col justify-between selection:bg-emerald-500 selection:text-slate-950 font-sans">
+      {/* Decorative backdrop according to selected theme */}
       <div
-        className="fixed inset-0 pointer-events-none -z-10 opacity-70"
+        className="fixed inset-0 pointer-events-none -z-10 opacity-75 transition-all duration-500"
         style={{
-          background:
-            'radial-gradient(circle at 15% 15%, rgba(245, 158, 11, 0.08) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.05) 0%, transparent 40%), linear-gradient(180deg, #07090e 0%, #0c1017 50%, #07090e 100%)',
+          background: getBackgroundGradient(),
         }}
       />
 
@@ -467,6 +477,9 @@ export default function App() {
         onAbrirNovaFeira={() => setModalNovaFeiraAberta(true)}
         modoAdmin={modoAdmin}
         onAlternarModoAdmin={() => setModoAdmin(!modoAdmin)}
+        config={config}
+        onAlternarTemaCor={(cor) => setConfig((prev) => ({ ...prev, temaCor: cor }))}
+        onAlternarModoEscuro={() => setConfig((prev) => ({ ...prev, modoEscuro: !prev.modoEscuro }))}
       />
 
       {/* Main Viewport Container */}
@@ -578,7 +591,7 @@ export default function App() {
 
       {/* Toast popup */}
       {toastMsg && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 border border-amber-500/50 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-medium animate-in fade-in slide-in-from-bottom-2">
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 border border-emerald-500/50 text-white px-4 py-2.5 rounded-xl shadow-xl text-xs font-medium animate-in fade-in slide-in-from-bottom-2">
           {toastMsg}
         </div>
       )}

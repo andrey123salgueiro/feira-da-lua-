@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Users,
   Plus,
   Search,
   Edit2,
@@ -58,7 +57,7 @@ export const StallsTab: React.FC<StallsTabProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-2xl bg-slate-900/90 border border-slate-800">
         <div>
           <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Store className="w-5 h-5 text-amber-400" />
+            <Store className="w-5 h-5 text-emerald-400" />
             Cadastro e Controle de Barracas · Feira da Lua
           </h2>
           <p className="text-xs text-slate-400 mt-1">
@@ -69,7 +68,7 @@ export const StallsTab: React.FC<StallsTabProps> = ({
         {modoAdmin && (
           <button
             onClick={onAbrirModalNovoFeirante}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-semibold rounded-xl transition-colors shadow-sm shadow-amber-400/20 shrink-0"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition-colors shadow-sm shadow-emerald-500/20 shrink-0"
           >
             <Plus className="w-4 h-4" />
             Cadastrar Nova Barraca
@@ -88,8 +87,8 @@ export const StallsTab: React.FC<StallsTabProps> = ({
           <p className="text-xl font-bold font-mono text-emerald-400 mt-1 tabular-nums">{totalAtivas}</p>
         </div>
         <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
-          <span className="text-[11px] text-amber-400 uppercase font-medium">Pontos Inativos</span>
-          <p className="text-xl font-bold font-mono text-amber-400 mt-1 tabular-nums">
+          <span className="text-[11px] text-teal-400 uppercase font-medium">Pontos Inativos</span>
+          <p className="text-xl font-bold font-mono text-teal-400 mt-1 tabular-nums">
             {feirantes.length - totalAtivas}
           </p>
         </div>
@@ -110,7 +109,7 @@ export const StallsTab: React.FC<StallsTabProps> = ({
             placeholder="Buscar por nome da barraca, responsável ou segmento..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+            className="w-full bg-slate-950 border border-slate-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400"
           />
         </div>
 
@@ -119,7 +118,7 @@ export const StallsTab: React.FC<StallsTabProps> = ({
             onClick={() => setFiltroCategoria('todos')}
             className={`px-3 py-1 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
               filtroCategoria === 'todos'
-                ? 'bg-amber-400 text-slate-950 font-semibold'
+                ? 'bg-emerald-600 text-white font-semibold'
                 : 'text-slate-400 hover:text-white bg-slate-950'
             }`}
           >
@@ -131,7 +130,7 @@ export const StallsTab: React.FC<StallsTabProps> = ({
               onClick={() => setFiltroCategoria(cat)}
               className={`px-3 py-1 text-xs font-medium rounded-lg whitespace-nowrap transition-colors ${
                 filtroCategoria === cat
-                  ? 'bg-amber-400 text-slate-950 font-semibold'
+                  ? 'bg-emerald-600 text-white font-semibold'
                   : 'text-slate-400 hover:text-white bg-slate-950'
               }`}
             >
@@ -173,7 +172,7 @@ export const StallsTab: React.FC<StallsTabProps> = ({
                   >
                     {/* Box */}
                     <td className="py-3 px-4">
-                      <span className="font-mono font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 text-[11px]">
+                      <span className="font-mono font-bold text-teal-400 bg-teal-400/10 px-2 py-0.5 rounded border border-teal-400/20 text-[11px]">
                         {feirante.boxNumero}
                       </span>
                     </td>
@@ -252,7 +251,7 @@ export const StallsTab: React.FC<StallsTabProps> = ({
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => onEditarFeirante(feirante)}
-                            className="p-1.5 text-slate-400 hover:text-amber-400 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors"
+                            className="p-1.5 text-slate-400 hover:text-emerald-400 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors"
                             title="Editar Barraca"
                           >
                             <Edit2 className="w-3.5 h-3.5" />

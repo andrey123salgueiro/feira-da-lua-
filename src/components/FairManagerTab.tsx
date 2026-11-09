@@ -2,17 +2,13 @@ import React, { useState } from 'react';
 import {
   Calendar,
   Search,
-  Filter,
   Check,
-  X,
   Plus,
   Trash2,
   FileText,
   Send,
-  AlertCircle,
   Receipt,
   PiggyBank,
-  CheckCircle2,
   Clock,
   Printer,
   ChevronDown,
@@ -177,16 +173,16 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-slate-900/90 border border-slate-800">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
             <h2 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-amber-400" />
+              <Calendar className="w-4 h-4 text-emerald-400" />
               {feiraAtiva.titulo}
             </h2>
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
             <span>Data: <strong className="text-slate-200 font-mono">{formatarDataBR(feiraAtiva.data)}</strong></span>
             <span>·</span>
-            <span>Taxa Padrão: <strong className="text-amber-400 font-mono">{formatarMoeda(feiraAtiva.taxaPadrao)}</strong></span>
+            <span>Taxa Padrão: <strong className="text-teal-400 font-mono">{formatarMoeda(feiraAtiva.taxaPadrao)}</strong></span>
             <span>·</span>
             <span>Local: <span className="text-slate-300">{config.localFeira}</span></span>
           </div>
@@ -199,7 +195,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
               value={feiraAtiva.id}
               onChange={(e) => onSelecionarFeira(e.target.value)}
               aria-label="Selecionar edição da Feira da Lua"
-              className="appearance-none bg-slate-950 border border-slate-700 hover:border-slate-600 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-white focus:outline-none focus:ring-1 focus:ring-amber-400 transition-colors"
+              className="appearance-none bg-slate-950 border border-slate-700 hover:border-slate-600 rounded-xl px-3.5 py-2 pr-8 text-xs font-medium text-white focus:outline-none focus:ring-1 focus:ring-emerald-400 transition-colors"
             >
               {feiras.map((f) => (
                 <option key={f.id} value={f.id}>
@@ -249,7 +245,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
             {modoAdmin && (
               <button
                 onClick={onMarcarTodosPresentes}
-                className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-lg border border-slate-700 transition-colors"
+                className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium bg-slate-800 hover:bg-slate-700 text-emerald-300 rounded-lg border border-slate-700 transition-colors"
               >
                 <Check className="w-3 h-3" />
                 Marcar Todos Presentes
@@ -266,7 +262,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
                 placeholder="Buscar barraca, box, dono..."
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
-                className="bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 w-44 sm:w-56"
+                className="bg-slate-950 border border-slate-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 w-44 sm:w-56"
               />
             </div>
 
@@ -283,7 +279,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
               <button
                 onClick={() => setFiltroStatus('pendentes')}
                 className={`px-2 py-1 rounded transition-colors ${
-                  filtroStatus === 'pendentes' ? 'bg-amber-950 text-amber-300 font-medium' : 'text-slate-400 hover:text-white'
+                  filtroStatus === 'pendentes' ? 'bg-rose-950 text-rose-300 font-medium' : 'text-slate-400 hover:text-white'
                 }`}
               >
                 Pendentes
@@ -361,7 +357,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
                     {/* Barraca */}
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2.5">
-                        <span className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-mono text-[10px] font-bold text-amber-400 shrink-0">
+                        <span className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center font-mono text-[10px] font-bold text-teal-400 shrink-0">
                           {feirante.boxNumero.replace(/\D/g, '') || 'BX'}
                         </span>
                         <div>
@@ -391,13 +387,13 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
                         onClick={() => onAtualizarPresenca(feirante.id, !reg.presente)}
                         className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border transition-all ${
                           reg.presente
-                            ? 'bg-amber-400/10 border-amber-400/40 text-amber-300'
+                            ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300'
                             : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:text-slate-200'
                         }`}
                       >
                         {reg.presente ? (
                           <>
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                             Presente
                           </>
                         ) : (
@@ -409,7 +405,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
                       </button>
                     </td>
 
-                    {/* Forma de Pagamento (Segmented Control) */}
+                    {/* Forma de Pagamento */}
                     <td className="py-3 px-4 text-center">
                       {reg.presente ? (
                         <div className="inline-flex items-center gap-0.5 p-0.5 bg-slate-950 rounded-lg border border-slate-800">
@@ -440,7 +436,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
                             onClick={() => onAtualizarPagamento(feirante.id, 'pendente')}
                             className={`px-2 py-1 text-[11px] font-medium rounded-md transition-colors ${
                               reg.pagamento === 'pendente'
-                                ? 'bg-amber-500 text-slate-950 font-bold shadow-sm'
+                                ? 'bg-rose-600 text-white font-semibold shadow-sm'
                                 : 'text-slate-400 hover:text-white'
                             }`}
                           >
@@ -475,7 +471,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
                             const v = parseFloat(e.target.value);
                             if (!isNaN(v)) onAtualizarTaxaIndividual(feirante.id, v);
                           }}
-                          className="w-20 bg-slate-950 border border-slate-800 text-right px-2 py-1 rounded text-xs font-mono font-bold text-slate-200 focus:outline-none focus:border-amber-400"
+                          className="w-20 bg-slate-950 border border-slate-800 text-right px-2 py-1 rounded text-xs font-mono font-bold text-slate-200 focus:outline-none focus:border-emerald-400"
                         />
                       ) : (
                         <span className="font-mono font-bold text-slate-200">
@@ -487,13 +483,12 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
                     {/* Ações */}
                     <td className="py-3 px-4 text-center no-print">
                       <div className="flex items-center justify-center gap-1.5">
-                        {/* WhatsApp cobrar button */}
                         {reg.presente && reg.pagamento === 'pendente' && linkWhatsApp && (
                           <a
                             href={linkWhatsApp}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-600/90 hover:bg-emerald-500 text-white text-[11px] font-medium rounded-lg transition-colors"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-medium rounded-lg transition-colors"
                             title="Cobrar via WhatsApp com mensagem pronta"
                           >
                             <Send className="w-3 h-3" />
@@ -501,13 +496,12 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
                           </a>
                         )}
 
-                        {/* Recibo button */}
                         <button
                           onClick={() => onEmitirRecibo(feirante)}
                           className="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-medium rounded-lg border border-slate-700 transition-colors"
                           title="Emitir Recibo Oficial de Aluguel"
                         >
-                          <FileText className="w-3 h-3 text-amber-400" />
+                          <FileText className="w-3 h-3 text-teal-400" />
                           Recibo
                         </button>
                       </div>
@@ -520,7 +514,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
         </div>
       </div>
 
-      {/* 3 Secondary Financial Management Blocks: Quitações Pós-Feira, Receitas Extras, Despesas */}
+      {/* 3 Secondary Financial Management Blocks */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Bloco 1: Quitações Pós-Feira */}
         <div className="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
@@ -538,7 +532,6 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
             Lançamento de feirantes que estavam devendo e quitaram a taxa dias depois.
           </p>
 
-          {/* Form */}
           {modoAdmin && (
             <form onSubmit={submitPosFeira} className="space-y-2.5 p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-xs">
               <select
@@ -596,7 +589,6 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
             </form>
           )}
 
-          {/* List */}
           <div className="space-y-1.5 max-h-48 overflow-y-auto">
             {(feiraAtiva.pagamentosPosFeira || []).length === 0 ? (
               <p className="text-xs text-slate-500 py-3 text-center italic">Nenhuma quitação pós-feira.</p>
@@ -652,12 +644,11 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
             Fundo de reserva, energia extra, saldo de feira anterior ou patrocínios.
           </p>
 
-          {/* Form */}
           {modoAdmin && (
             <form onSubmit={submitReceitaExtra} className="space-y-2.5 p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-xs">
               <input
                 type="text"
-                placeholder="Descrição (ex: Energia extra, Saldo anterior)"
+                placeholder="Descrição (ex: Energia extra, Apoio)"
                 value={descExtra}
                 onChange={(e) => setDescExtra(e.target.value)}
                 required
@@ -696,7 +687,6 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
             </form>
           )}
 
-          {/* List */}
           <div className="space-y-1.5 max-h-48 overflow-y-auto">
             {(feiraAtiva.receitasExtras || []).length === 0 ? (
               <p className="text-xs text-slate-500 py-3 text-center italic">Nenhuma receita extra registrada.</p>
@@ -747,7 +737,6 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
             Limpeza, som, locutor, coordenação, aluguel de mesas e estrutura.
           </p>
 
-          {/* Form */}
           {modoAdmin && (
             <form onSubmit={submitDespesa} className="space-y-2.5 p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-xs">
               <input
@@ -773,6 +762,7 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
                   <option value="Mesas & Cadeiras">Mesas</option>
                   <option value="Infraestrutura">Infra</option>
                   <option value="Segurança">Segurança</option>
+                  <option value="Atrações & Outros">Atrações</option>
                   <option value="Outros">Outros</option>
                 </select>
                 <input
@@ -806,7 +796,6 @@ export const FairManagerTab: React.FC<FairManagerTabProps> = ({
             </form>
           )}
 
-          {/* List */}
           <div className="space-y-1.5 max-h-48 overflow-y-auto">
             {(feiraAtiva.despesas || []).length === 0 ? (
               <p className="text-xs text-slate-500 py-3 text-center italic">Nenhuma despesa lançada.</p>

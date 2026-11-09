@@ -70,6 +70,8 @@ export interface ConfiguracaoFeira {
   bancoPix: string;
   taxaPadraoGlobal: number;
   mensagemWhatsAppModelo: string;
+  temaCor?: 'esmeralda' | 'safira' | 'cobre';
+  modoEscuro?: boolean;
 }
 
 export type TabTipo = 'feiras' | 'mapa' | 'feirantes' | 'relatorios' | 'configuracoes';
